@@ -40,15 +40,24 @@ public class AdminService {
     }
 
     public User findOne(Long id) {
+        User user = null;
         Optional<User> foundUser = userRepository.findById(id);
-        return foundUser.orElse(null);
+        if (foundUser.orElse(null) != null) {
+            user = foundUser.get();
+            user.setPassword(null);
+        }
+        return user;
     }
 
     @Transactional
     public void update(User user) {
-        user.setPassword(BCrypt().encode(user.getPassword()));
-        user.addRoleToUser(saveRole(new Role("ROLE_USER")));
-        userRepository.save(user);
+        if (user.getPassword().isEmpty()) {
+            //ignore
+        } else {
+            user.setPassword(BCrypt().encode(user.getPassword()));
+            user.addRoleToUser(saveRole(new Role("ROLE_USER")));
+            userRepository.save(user);
+        }
     }
 
     @Bean
