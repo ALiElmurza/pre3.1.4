@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменить пользователя</title>
+</head>
+<body>
+
+<div th:each="user : ${users}">
+    <a th:href="@{/admin/{id}/edit(id=${user.getId()})}" th:text="${user.toString()}">name</a>
+</div>
+
+<br/>
+
+<button type="button">
+    <a href="/admin/new">Добавить нового пользователя</a>
+</button>
+
+<br/>
+
+<button type="button">
+    <a href="/admin/delete">Удалить пользователя</a>
+</button>
+
+</body>
+</html>

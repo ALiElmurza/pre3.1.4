@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Пользователь</title>
+</head>
+<body>
+<p th:text="${user.toString()}">VALUE</p>
+
+<form th:method="DELETE" th:action="@{/admin/{id}/delete(id=${user.getId})}">
+    <input type="submit" value="Удалить!"/>
+</form>
+</body>
+</html>

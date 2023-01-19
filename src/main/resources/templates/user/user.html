@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Spring Security Example</title>
+</head>
+<body>
+<h1 th:text="${user.toString()}">VALUE</h1>
+
+<button type="button">
+    <a href="/logout">Выйти</a>
+</button>
+
+</body>
+</html>
