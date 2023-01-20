@@ -43,14 +43,9 @@ public class AdminController {
 
 
     //new
-    @PostMapping(value = "/edit/{id}")
-    public String updateUser(@ModelAttribute("user") User user) {
-        if (user.getPassword() == null) {
-            userService.save(user);
-        } else {
-            //user.setPassword(BCrypt().encode(user.getPassword()));
-            userService.save(user);
-        }
+    @PostMapping( "/edit/{id}")
+    public String updateUser(ModelMap model, @PathVariable Long id, @ModelAttribute("user") User user) {
+        adminService.update(user);
         return "redirect:/admin";
     }
 
