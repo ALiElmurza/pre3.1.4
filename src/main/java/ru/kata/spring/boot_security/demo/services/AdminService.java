@@ -52,16 +52,16 @@ public class AdminService {
     @Transactional
     public void update(User user) {
         if (user.getPassword().equals(user.getHashPassword())) {
-            save(user);
+            userRepository.saveAndFlush(user);
         } else {
             user.setPassword(BCrypt().encode(user.getPassword()));
             user.setHashPassword(user.getPassword());
-            save(user);
+            userRepository.save(user);
         }
     }
     @Transactional
     public void save(User user) {
-        userRepository.saveAndFlush(user);
+        userRepository.save(user);
     }
 
     @Bean
@@ -73,45 +73,15 @@ public class AdminService {
     public void saveAdmin(User user) {
         User userFromDB = userRepository.findByUsername(user.getUsername());
         if (userFromDB == null) {
-            System.out.println(1);
-
             user.setPassword(BCrypt().encode(user.getHashPassword()));
-
-            System.out.println(2);
-
             user.setHashPassword(user.getPassword());
-
-            System.out.println(3);
-
             Role role = new Role("ROLE_ADMIN");
-
-            System.out.println(4);
-
             Role role1 = new Role("ROLE_USER");
-
-            System.out.println(5);
-
             user.addRoleToUser(role);
-
-            System.out.println(6);
-
             user.addRoleToUser(role1);
-
-            System.out.println(7);
-
             userRepository.save(user);
-
-            System.out.println(8);
-
-
             roleRepository.save(role);
-
-            System.out.println(9);
-
             roleRepository.save(role1);
-
-            System.out.println(10);
-
         }
     }
 
