@@ -55,6 +55,7 @@ public class AdminService {
             save(user);
         } else {
             user.setPassword(BCrypt().encode(user.getPassword()));
+            user.setHashPassword(user.getPassword());
             save(user);
         }
     }

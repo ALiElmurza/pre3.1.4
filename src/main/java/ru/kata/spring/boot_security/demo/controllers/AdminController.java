@@ -34,7 +34,6 @@ public class AdminController {
     @GetMapping
     public String adminPage(Model model, Principal principal, @ModelAttribute("new_user") User new_user) {
         User user = userService.findByUsername(principal.getName());
-        //@AuthenticationPrincipal User user
         List<User> allUsers = userService.findAll();
         List<Role> allRoles = roleService.findAll();
         model.addAttribute("allUsers", allUsers);
@@ -54,61 +53,15 @@ public class AdminController {
 
     @PostMapping(value = "/saveUser")
     public String saveUser(@ModelAttribute("new_user") User new_user) {
-        List<User> allUsers = userService.findAll();
         userService.save(new_user);
         return "redirect:/admin";
     }
 
-//
-//    //Удаление пользователя
-//    @GetMapping("/delete")
-//    public String getListToDelete(Model model) {
-//        model.addAttribute("users", userService.findAll());
-//        return "admin/delete";
-//    }
-//
-//    @GetMapping("/{id}/deleteById")
-//    public String getUserToDelete(@PathVariable("id") Long id, Model model) {
-//        model.addAttribute("user", userService.findOne(id));
-//        return "admin/show";
-//    }
-//    @DeleteMapping("/{id}/delete")
-//    public String delete(@PathVariable("id") Long id) {
-//        adminService.delete(id);
-//        return "redirect:/admin";
-//    }
-//    //Вернуть пользователя по id
-//    @GetMapping("/{id}")
-//    public String getUserById(@PathVariable("id") Long id, Model model) {
-//        model.addAttribute("user", userService.findOne(id));
-//        return "admin/show";
-//    }
-//    //Создать пользователя
-//    @GetMapping("/new")
-//    public String newPage(@ModelAttribute("user") User user) {
-//        return "admin/new";
-//    }
-//
-//    @PostMapping()
-//    public String create(@ModelAttribute("user") User user) {
-//        userService.save(user);
-//        return "redirect:/admin";
-//    }
-//
-//    //Обновить пользователя
-//    @GetMapping("/update")
-//    public String getListToUpdate(Model model) {
-//        model.addAttribute("users", userService.findAll());
-//        return "/admin/update";
-//    }
-//
-//    @PatchMapping("/{id}")
-//    public String update(@ModelAttribute("user") User user) {
-//        System.out.println("patch - 1");
-//        adminService.update(user);
-//        System.out.println("patch - 2");
-//        return "redirect:/admin";
-//    }
+    @PostMapping(value = "deleteUser/{id}")
+    public String deleteUser(@PathVariable Long id) {
+        adminService.delete(id);
+        return "redirect:/admin";
+    }
 
 
 

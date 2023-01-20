@@ -134,18 +134,27 @@
                                                                            name="id">
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="name"
+                                                                    <label for="username"
+                                                                           class="col-form-label">Username</label>
+                                                                    <input type="text" class="form-control"
+                                                                           id="username"
+                                                                           th:value="${usr.username}"
+                                                                           name="name">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="firstname"
                                                                            class="col-form-label">First Name</label>
                                                                     <input type="text" class="form-control"
-                                                                           id="name"
+                                                                           id="firstname"
                                                                            th:value="${usr.firstname}"
                                                                            name="name">
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="surname"
+                                                                    <label for="lastname"
                                                                            class="col-form-label">Last Name</label>
                                                                     <input type="text" class="form-control"
-                                                                           id="surname"
+                                                                           id="lastname"
                                                                            th:value="${usr.lastname}"
                                                                            name="surname">
                                                                 </div>
@@ -164,10 +173,10 @@
                                                                            th:value="${usr.email}">
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="edPassword"
+                                                                    <label for="password"
                                                                            class="col-form-label">Password</label>
                                                                     <input type="text" class="form-control"
-                                                                           id="edPassword" name="password"
+                                                                           id="password" name="password"
                                                                            th:value="${usr.password}">
                                                                 </div>
                                                                 <div class="form-group">
@@ -219,10 +228,10 @@
                                                         <div class="form-group container-fluid col-md-8 bg-white text-center">
                                                             <div class="modal-body text-center font-weight-bold">
                                                                 <div class="form-group">
-                                                                    <label for="delitId"
+                                                                    <label for="deleteId"
                                                                            class="col-form-label">ID</label>
                                                                     <input class="form-control" type="text"
-                                                                           id="delitId"
+                                                                           id="deleteId"
                                                                            name="id" th:value="${usr.id}"
                                                                            readonly>
                                                                 </div>
@@ -309,6 +318,10 @@
                             <div class="text-center  font-weight-bold">
                                 <form th:action="@{/admin/saveUser}" th:object="${new_user}" method="post"
                                       class="offset-md-4 col-md-3 mt-4 mb-4">
+                                    <div class="form-group">
+                                        <label th:for="username">Login</label>
+                                        <input type="text" class="form-control" th:id="username" th:field="*{username}">
+                                    </div>
                                     <div class="form-group">
                                         <label th:for="name">First Name</label>
                                         <input type="text" class="form-control" th:id="name" th:field="*{firstname}">
