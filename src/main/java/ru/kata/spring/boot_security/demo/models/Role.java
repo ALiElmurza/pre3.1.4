@@ -4,7 +4,6 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -12,6 +11,7 @@ import java.util.Set;
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     private String name;
@@ -53,5 +53,10 @@ public class Role implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return getName();
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

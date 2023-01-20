@@ -1,35 +1,59 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.AdminService;
+import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
     private UserService userService;
     private AdminService adminService;
+    private RoleService roleService;
     @Autowired
     public AdminController(UserService userService,
-                           AdminService adminService) {
+                           AdminService adminService,
+                           RoleService roleService) {
         this.userService = userService;
         this.adminService = adminService;
+        this.roleService = roleService;
     }
 
-    //Список полбзователей
+    //Список пользователей
     @GetMapping
-    public String adminPage(Principal principal, Model model) {
-        User user = userService.findByUsername(principal.getName());;
+    public String adminPage(Model model, Principal principal, @ModelAttribute("new_user") User new_user) {
+        User user = userService.findByUsername(principal.getName());
         model.addAttribute("user", user);
         model.addAttribute("users", userService.findAll());
+        model.addAttribute("roles", roleService.findAll());
         return "admin/admin";
     }
+
+
+    //new
+    @PostMapping(value = "/edit/{id}")
+    public String updateUser(@ModelAttribute("user") User user) {
+        if (user.getPassword() == null) {
+            userService.save(user);
+        } else {
+            //user.setPassword(BCrypt().encode(user.getPassword()));
+            userService.save(user);
+        }
+        return "redirect:/admin";
+    }
+
 
     //Удаление пользователя
     @GetMapping("/delete")
@@ -73,12 +97,6 @@ public class AdminController {
         return "/admin/update";
     }
 
-    @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("user", adminService.findOne(id));
-        return "/admin/edit";
-    }
-
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("user") User user) {
         System.out.println("patch - 1");
@@ -86,6 +104,9 @@ public class AdminController {
         System.out.println("patch - 2");
         return "redirect:/admin";
     }
+
+
+
 
 
 
