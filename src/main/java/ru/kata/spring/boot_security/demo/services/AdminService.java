@@ -71,9 +71,12 @@ public class AdminService {
         if (userFromDB == null) {
             user.setPassword(BCrypt().encode(user.getPassword()));
             Role role = new Role("ROLE_ADMIN");
+            Role role1 = new Role("ROLE_USER");
             user.addRoleToUser(role);
+            user.addRoleToUser(role1);
             userRepository.save(user);
             roleRepository.save(role);
+            roleRepository.save(role1);
         }
     }
 

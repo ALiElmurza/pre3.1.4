@@ -19,6 +19,14 @@ public class User implements UserDetails {
 
     @Column(name = "username")
     private String username;
+    @Column(name = "firstname")
+    private String firstname;
+    @Column(name = "lastname")
+    private String lastname;
+    @Column(name = "age")
+    private int age;
+    @Column(name = "email")
+    private String email;
     @Column(name = "password")
     private String password;
 
@@ -35,15 +43,52 @@ public class User implements UserDetails {
 
     }
 
-    public User(String username, String password) {
+    public User(String username, String password, String firstname, String lastname, int age, String email) {
         this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.age = age;
+        this.email = email;
         this.password = password;
     }
+
     public void addRoleToUser(Role role) {
         if (roles == null) {
             roles = new HashSet<>();
         }
         roles.add(role);
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {
@@ -70,12 +115,20 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public Collection<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getRolesString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Role role : roles) {
+            stringBuilder.append(role.getName()).append(" ");
+        }
+        return stringBuilder.toString();
     }
 
     @Override
