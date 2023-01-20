@@ -5,10 +5,7 @@ import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -29,14 +26,16 @@ public class User implements UserDetails {
     private String email;
     @Column(name = "password")
     private String password;
+    @Column(name = "hashPassword")
+    private String hashPassword;
 
 //    private String email;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn (name = "user_id"),
-            inverseJoinColumns = @JoinColumn (name = "role_id"))
+    @JoinTable(name="user_roles",
+            joinColumns=@JoinColumn(name="user_id"),
+            inverseJoinColumns=@JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
     public User() {
@@ -45,11 +44,13 @@ public class User implements UserDetails {
 
     public User(String username, String password, String firstname, String lastname, int age, String email) {
         this.username = username;
+        this.password = password;
+        this.hashPassword = password;
         this.firstname = firstname;
         this.lastname = lastname;
         this.age = age;
         this.email = email;
-        this.password = password;
+
     }
 
     public void addRoleToUser(Role role) {
@@ -57,6 +58,14 @@ public class User implements UserDetails {
             roles = new HashSet<>();
         }
         roles.add(role);
+    }
+
+    public String getHashPassword() {
+        return hashPassword;
+    }
+
+    public void setHashPassword(String hashPassword) {
+        this.hashPassword = hashPassword;
     }
 
     public String getFirstname() {
@@ -115,13 +124,10 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public Set<Role> getRoles() {
+    public Set<Role> getRoles(){
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
 
     public String getRolesString() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -138,7 +144,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
+        return roles;
     }
 
     @Override

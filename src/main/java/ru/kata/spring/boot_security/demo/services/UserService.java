@@ -50,6 +50,7 @@ public class UserService implements UserDetailsService {
             return false;
         }
         user.setPassword(BCryptPassword().encode(user.getPassword()));
+        user.setHashPassword(user.getPassword());
         user.addRoleToUser(saveRole(new Role("ROLE_USER")));
         userRepository.save(user);
         return true;
