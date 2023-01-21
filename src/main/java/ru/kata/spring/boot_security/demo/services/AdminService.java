@@ -9,7 +9,6 @@ import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
-
 import java.util.Optional;
 
 @Service
@@ -51,12 +50,21 @@ public class AdminService {
 
     @Transactional
     public void update(User user) {
+        System.out.println(1);                     //УДАЛИТЬ !!!!!!!!!
+        System.out.println(user.getUsername());
+        System.out.println();
+        System.out.println(user.getPassword());
+        System.out.println();
+        System.out.println(user.getHashPassword());
+        System.out.println();                       //УДАЛИТЬ !!!!!!!!
         if (user.getPassword().equals(user.getHashPassword())) {
             userRepository.saveAndFlush(user);
+            System.out.println(2);
         } else {
             user.setPassword(BCrypt().encode(user.getPassword()));
             user.setHashPassword(user.getPassword());
-            userRepository.save(user);
+            userRepository.saveAndFlush(user);
+            System.out.println(3);
         }
     }
     @Transactional
@@ -86,3 +94,12 @@ public class AdminService {
     }
 
 }
+
+
+//        if (user.getPassword().equals(user.getHashPassword())) {
+//            userRepository.saveAndFlush(user);
+//        } else {
+//            user.setPassword(BCrypt().encode(user.getPassword()));
+//            user.setHashPassword(user.getPassword());
+//            userRepository.save(user);
+//        }

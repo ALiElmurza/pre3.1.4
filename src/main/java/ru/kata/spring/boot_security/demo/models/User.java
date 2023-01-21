@@ -31,6 +31,7 @@ public class User implements UserDetails {
 
 //    private String email;
 
+
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
     @JoinTable(name="user_roles",
@@ -128,6 +129,10 @@ public class User implements UserDetails {
         return roles;
     }
 
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
 
     public String getRolesString() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -136,6 +141,8 @@ public class User implements UserDetails {
         }
         return stringBuilder.toString();
     }
+
+
 
     @Override
     public String toString() {

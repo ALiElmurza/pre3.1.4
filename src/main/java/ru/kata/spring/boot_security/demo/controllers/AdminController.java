@@ -46,9 +46,18 @@ public class AdminController {
 
     //new
     @PostMapping( "/edit/{id}")
-    public String updateUser(ModelMap model, @PathVariable int id, @ModelAttribute("user") User user) {
+    public String updateUser(ModelMap model, @PathVariable int id, @ModelAttribute("user") User user,
+                             @ModelAttribute ("role") Role role) {
+        System.out.println("------------"); //УДАЛИТЬ
+        System.out.println(role.getName());
+        System.out.println(user.getRolesString());
+        System.out.println("------------"); //УДАЛИТЬ
         adminService.update(user);
         return "redirect:/admin";
+
+        //th:selected="${usr.getRolesString()}"
+
+        //th:text="${role.toString()}"
     }
 
     @PostMapping(value = "/saveUser")

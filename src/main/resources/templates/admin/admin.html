@@ -139,7 +139,7 @@
                                                                     <input type="text" class="form-control"
                                                                            id="username"
                                                                            th:value="${usr.username}"
-                                                                           name="name">
+                                                                           name="username">
                                                                 </div>
 
                                                                 <div class="form-group">
@@ -148,7 +148,7 @@
                                                                     <input type="text" class="form-control"
                                                                            id="firstname"
                                                                            th:value="${usr.firstname}"
-                                                                           name="name">
+                                                                           name="firstname">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="lastname"
@@ -156,7 +156,7 @@
                                                                     <input type="text" class="form-control"
                                                                            id="lastname"
                                                                            th:value="${usr.lastname}"
-                                                                           name="surname">
+                                                                           name="lastname">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="age"
@@ -179,6 +179,9 @@
                                                                            id="password" name="password"
                                                                            th:value="${usr.password}">
                                                                 </div>
+                                                                <div >
+                                                                    <input type="hidden" th:value="${usr.hashPassword}">
+                                                                </div>
                                                                 <div class="form-group">
                                                                     <label for="role">Role</label>
                                                                     <select multiple
@@ -193,6 +196,7 @@
                                                                             </th:block>
                                                                         </option>
                                                                     </select>
+
                                                                 </div>
                                                             </div>
                                                         </div>
